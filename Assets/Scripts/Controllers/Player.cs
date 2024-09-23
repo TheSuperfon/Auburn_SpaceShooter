@@ -8,7 +8,9 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
-    public float speed = 20f;
+    public float speed = 10f;
+    public float MaxSpeed = 40f;
+    public float AccelerationTime = 0;
 
     void Update()
     {
@@ -38,6 +40,25 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += ((Vector3.right * speed * Time.deltaTime));
+        }
+        if ((Input.GetKey(KeyCode.W)) || (Input.GetKey(KeyCode.S)) || (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D)))
+        {
+            AccelerationTime += Time.deltaTime;
+            if (AccelerationTime < 3)
+            {
+                speed += ((MaxSpeed * Time.deltaTime)/ 3);
+            }
+
+            
+            if (speed >= MaxSpeed)
+            {
+                speed = MaxSpeed;
+            }
+        }
+        else
+        {
+            speed = 10f;
+            AccelerationTime = 0;
         }
     }
 
