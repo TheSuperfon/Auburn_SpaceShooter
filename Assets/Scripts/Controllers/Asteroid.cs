@@ -17,4 +17,16 @@ public class Asteroid : MonoBehaviour
     void Update()
     {
     }
+
+    private void FixedUpdate()
+    {
+        
+    }
+
+
+    public void EnemyMovement()
+    {
+
+    }
+
 }
