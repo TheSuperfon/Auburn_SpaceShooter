@@ -13,10 +13,11 @@ public class Player : MonoBehaviour
     public float AccelerationTime = 0;
     public float DecelerationTime = 2f;
     public Vector3 PlayerDirection;
+    
 
     void Update()
     {
-        
+        EnemyRadar(3f, 8);
     }
 
     private void FixedUpdate()
@@ -86,5 +87,40 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        Color RadarrColor;
+        float Enemydistance = Vector3.Distance(transform.position, enemyTransform.position);
+        if (Enemydistance <= radius + (enemyTransform.localScale.x/2) || Enemydistance <= radius + (enemyTransform.localScale.y / 2))
+        {
+            RadarrColor = Color.red;
+        }
+        else
+        {
+            RadarrColor = Color.green;
+        }
+
+        Vector3 StartPosition = new Vector3(transform.position.x + radius, transform.position.y, 0);
+
+        Vector3 previouscorner = StartPosition;
+
+        for (int i = 0; i < circlePoints; i++)
+        {
+            
+            float CornerChange = 2f * Mathf.PI / circlePoints * i;
+
+            Vector3 Currentcorner = new Vector3(transform.position.x + Mathf.Cos(CornerChange) * radius, transform.position.y + Mathf.Sin(CornerChange) * radius, 0);
+
+            Debug.DrawLine((previouscorner), (Currentcorner), RadarrColor);
+
+            previouscorner = Currentcorner;
+
+
+        }
+
+        Debug.DrawLine((StartPosition), (previouscorner), RadarrColor);
+
+    }
 
 }
