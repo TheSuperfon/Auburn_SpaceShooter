@@ -7,26 +7,39 @@ public class Player : MonoBehaviour
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
+    public GameObject powerupPrefab;
     public Transform bombsTransform;
     public float speed = 10f;
     public float MaxSpeed = 40f;
     public float AccelerationTime = 0;
     public float DecelerationTime = 2f;
     public Vector3 PlayerDirection;
-    
+    bool powerupsSpawned = false;
+
+
 
     void Update()
     {
         EnemyRadar(3f, 8);
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            powerupsSpawned = false;
+        }
     }
 
     private void FixedUpdate()
     {
         playermovementMethod();
+        if (powerupsSpawned == false)
+        {
+            SpawnPowerups(3, 8);
+            powerupsSpawned=true;
+        }
         
     }
     void playermovementMethod()
     {
+        
         //transform.position += direction;
         if (Input.GetKey(KeyCode.W))
         {
@@ -120,6 +133,28 @@ public class Player : MonoBehaviour
         }
 
         Debug.DrawLine((StartPosition), (previouscorner), RadarrColor);
+
+    }
+
+    public void SpawnPowerups(float radius, int numberofPowerups)
+    {
+        
+        Instantiate(powerupPrefab, new Vector3(transform.position.x + radius, transform.position.y, 0), Quaternion.identity);
+
+
+        for (int i = 0; i < numberofPowerups; i++)
+        {
+
+            float CornerChange = 2f * Mathf.PI / numberofPowerups * i;
+
+            Vector3 CurrentPowerupSpawn = new Vector3(transform.position.x + Mathf.Cos(CornerChange) * radius, transform.position.y + Mathf.Sin(CornerChange) * radius, 0);
+
+            Instantiate(powerupPrefab, CurrentPowerupSpawn, Quaternion.identity);
+
+
+        }
+
+
 
     }
 
