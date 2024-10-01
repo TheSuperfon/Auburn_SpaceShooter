@@ -3425,7 +3425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angularSpeed: 30
-  targetAngle: 130
+  targetAngle: 60
 --- !u!212 &1958448095
 SpriteRenderer:
   m_ObjectHideFlags: 0
